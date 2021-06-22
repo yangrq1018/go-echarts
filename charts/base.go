@@ -22,6 +22,7 @@ type BaseConfiguration struct {
 	opts.Polar      `json:"polar"`
 	opts.AngleAxis  `json:"angleAxis"`
 	opts.RadiusAxis `json:"radiusAxis"`
+	opts.Grid       `json:"grid"`
 
 	render.Renderer        `json:"-"`
 	opts.Initialization    `json:"-"`
@@ -39,6 +40,8 @@ type BaseConfiguration struct {
 	opts.YAxis3D
 	opts.ZAxis3D
 	opts.Grid3D
+
+	GlobalTextStyle *opts.TextStyle `json:"textStyle,omitempty"`
 
 	legends []string
 	// Colors is the color list of palette.
@@ -87,6 +90,11 @@ func (bc *BaseConfiguration) json() map[string]interface{} {
 		"legend":  bc.Legend,
 		"tooltip": bc.Tooltip,
 		"series":  bc.MultiSeries,
+		"grid":    bc.Grid,
+	}
+
+	if bc.GlobalTextStyle != nil {
+		obj["textStyle"] = bc.GlobalTextStyle
 	}
 
 	if bc.hasPolar {
@@ -230,6 +238,12 @@ func WithTooltipOpts(opt opts.Tooltip) GlobalOpts {
 	}
 }
 
+func WithGridOpts(opt opts.Grid) GlobalOpts {
+	return func(bc *BaseConfiguration) {
+		bc.Grid = opt
+	}
+}
+
 // WithLegendOpts sets the legend.
 func WithLegendOpts(opt opts.Legend) GlobalOpts {
 	return func(bc *BaseConfiguration) {
@@ -247,6 +261,13 @@ func WithInitializationOpts(opt opts.Initialization) GlobalOpts {
 			bc.JSAssets.Add("themes/" + opt.Theme + ".js")
 		}
 		bc.Initialization.Validate()
+	}
+}
+
+// WithGlobalTextStyle sets the global text style
+func WithGlobalTextStyle(opt opts.TextStyle) GlobalOpts {
+	return func(bc *BaseConfiguration) {
+		bc.GlobalTextStyle = &opt
 	}
 }
 

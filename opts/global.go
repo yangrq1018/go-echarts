@@ -149,6 +149,9 @@ type Title struct {
 	// value relative to container width like '20%'.
 	// Adaptive by default.
 	Right string `json:"right,omitempty"`
+
+	// title space around content. The unit is px. Default values for each position are 5. And they can be set to different values with left, right, top, and bottom
+	Padding int `json:"padding,omitempty"`
 }
 
 // Legend is the option set for a legend component.
@@ -334,6 +337,7 @@ type Tooltip struct {
 	Formatter string `json:"formatter,omitempty"`
 
 	// Configuration item for axisPointer
+	// Label will not show by default. But if tooltip.axisPointer.type is set as 'cross', label will be displayed automatically.
 	AxisPointer *AxisPointer `json:"axisPointer,omitempty"`
 }
 
@@ -352,6 +356,9 @@ type AxisPointer struct {
 	// 	Whether snap to point automatically. The default value is auto determined.
 	// This feature usually makes sense in value axis and time axis, where tiny points can be seeked automatically.
 	Snap bool `json:"snap,omitempty"`
+
+	// label of axisPointer
+	Label *Label `json:"label,omitempty"`
 }
 
 // Toolbox is the option set for a toolbox component.
@@ -734,6 +741,15 @@ type TextStyle struct {
 	// Font size
 	FontSize int `json:"fontSize,omitempty"`
 
+	// font thick weight.
+	// Options are:
+	//  - 'normal'
+	//  - 'bold'
+	//  - 'bolder'
+	//  - 'lighter'
+	//  - 100 | 200 | 300 | 400...
+	FontWeight string `json:"fontWeight,omitempty"`
+
 	// Font family the main title font family.
 	// Options: "sans-serif", 'serif' , 'monospace', 'Arial', 'Courier New', 'Microsoft YaHei', ...
 	FontFamily string `json:"fontFamily,omitempty"`
@@ -1050,6 +1066,13 @@ type RadiusAxis struct {
 	NameGap       float64   `json:"nameGap,omitempty"`
 	NameRadius    float64   `json:"nameRotate,omitempty"`
 	Inverse       bool      `json:"inverse,omitempty"`
+}
+
+// Grid draws grid in rectangular coordinate. In a single grid, at most two X and Y axes each is allowed.
+// https://echarts.apache.org/en/option.html#grid
+type Grid struct {
+	Show    bool     `json:"show,omitempty"`
+	ToolTip *Tooltip `json:"tooltip,omitempty"`
 }
 
 var funcPat = regexp.MustCompile(`\n|\t`)
