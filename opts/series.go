@@ -113,6 +113,10 @@ type MarkLineStyle struct {
 	// Mark line text options.
 	Label *Label `json:"label,omitempty"`
 
+	// Precision of marking line value, which is useful when displaying average value mark line.
+	// The default value is 2.
+	Precision int `json:"precision,omitempty"`
+
 	// Mark line style
 	LineStyle *LineStyle `json:"lineStyle,omitempty"`
 }
