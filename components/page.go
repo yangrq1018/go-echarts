@@ -1,8 +1,8 @@
 package components
 
 import (
-	"github.com/go-echarts/go-echarts/v2/opts"
-	"github.com/go-echarts/go-echarts/v2/render"
+	"github.com/yangrq1018/go-echarts/v2/opts"
+	"github.com/yangrq1018/go-echarts/v2/render"
 )
 
 type Layout string
